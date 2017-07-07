@@ -132,10 +132,26 @@ Below is an example of the entry in the file:
     	    </condition>
     	</fail>
     	
+		<!-- Copy over the modules -->
 		<copy todir="${export_dir}/${value.build.appname}">
 			<fileset dir="${value.src.directory}" />
 			<globmapper from="*.html" to="${value.build.prefix}_*.html" />
 		</copy>
+
+        <!-- Copy the files over that need substitution. This should only be
+             applied to text files since Ant may corrupt binary files otherwise. -->
+        <copy todir="${export_dir}/${value.build.appname}">
+            <fileset dir="${value.src.directory}">
+                <patternset refid="substituted_files" />
+            </fileset>
+            
+            <!-- Perform the substitution of the build information -->
+            <filterset begintoken="${" endtoken="}"> 
+                <filter token="value.build.number" value="${value.build.number}" />
+            	<filter token="value.build.date" value="${value.build.date}" />
+				<filter token="value.build.prefix" value="${value.build.prefix}" />
+            </filterset>
+        </copy>
 
     </target>
 </project>
