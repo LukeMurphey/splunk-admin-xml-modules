@@ -1,0 +1,107 @@
+
+<project default="package" name="admin_modules">
+	<import file="basebuild.xml"/>
+
+	<target name="initialize_libraries">
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+		     <classpath>
+		    	<pathelement location="${absolute_lib_path}/ant-contrib-0.6.jar"/>
+		     </classpath>
+		</taskdef>
+	</target>
+
+    <!-- ================================= 
+          target: download_libraries
+         ================================= -->
+	<target name="download_libraries" depends="initialize_properties">
+		<!-- Make sure the directory to store the library files exists -->
+		<mkdir dir="${absolute_lib_path}" />
+		
+		<get src="https://lukemurphey.net/attachments/download/402/ant-contrib-0.6.jar" 
+		    dest="${absolute_lib_path}/ant-contrib-0.6.jar" 
+		    verbose="true"
+			skipexisting="true" />
+	</target>
+
+    <!-- ================================= 
+          target: get_prefix
+         ================================= -->
+    <target name="get_prefix" unless="value.build.prefix" depends="initialize">
+		<!-- Get the app name -->
+		<input
+		    message="Please enter the prefix you want to use for the modules names. This needs to be unique to your app and contain only letters and underscores. You should name it after your app in order to make it unique (e.g. website_monitoring):"
+		    addproperty="value.build.prefix"
+		/>
+
+		<condition property="prefix_name_empty">
+		    <equals arg1="" arg2="${value.build.prefix}"/>
+		</condition>
+		
+		<fail if="prefix_name_empty">No prefix was provided, cannot proceed</fail>
+		
+	</target>
+
+    <!-- ================================= 
+          target: persist_prefix
+         ================================= -->
+    <target name="persist_prefix" if="value.build.prefix" depends="initialize,get_prefix">
+
+    	<!-- Make sure that the local properties file doesn't already exist -->
+    	<fail message="The local properties file already exists ('${basedir}/local.properties')">
+    	    <condition>
+    	        <available file="${basedir}/local.properties"/>
+    	    </condition>
+    	</fail>
+
+		<!-- Make the local properties file -->
+		<echo file="${basedir}/local.properties">
+# Change this prefix to change the name of the modules that are created.
+# This needs to be unique enough that the modules will be unlikely to have the same name as those included in other apps.
+value.build.prefix=${value.build.prefix}
+		</echo> 
+	</target>
+
+    <!-- ================================= 
+          target: setup
+         ================================= -->
+	<target name="setup" unless="value.build.prefix" depends="initialize,persist_prefix" />
+
+    <!-- ================================= 
+          target: populate_export_dir
+         ================================= -->
+    <target name="populate_export_dir" depends="initialize,get_build_number,get_prefix">
+    	
+    	<!-- Make sure that the source directory exists -->
+    	<fail message="The directory where the source-code is supposed to be doesn't exist ('${absolute_src_path}')">
+    	    <condition>
+    	        <not>
+    	        	<available file="${absolute_src_path}" type="dir"/>
+    	        </not>
+    	    </condition>
+    	</fail>
+
+    	<!-- Make sure that the prefix is defined -->
+    	<fail>
+"value.build.prefix" has not been defined
+Declare it in the a local.properties file in the following path:
+	
+   ${absolute_src_path}/local.properties
+
+Below is an example of the entry in the file:
+
+   value.build.prefix=my_custom_app_name_here
+    	    <condition>
+    	        <not>
+    	        	<isset property="value.build.prefix"/>
+    	        </not>
+    	    </condition>
+    	</fail>
+    	
+		<copy todir="${export_dir}/${value.build.appname}">
+			<fileset dir="${value.src.directory}" />
+			<globmapper from="*.html" to="${value.build.prefix}_*.html" />
+		</copy>
+
+    </target>
+</project>
+		
