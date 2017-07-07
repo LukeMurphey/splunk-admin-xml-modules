@@ -20,3 +20,4 @@ Thumbs.db
 .settings/
 /tmp/
 .vscode/*
+lib/*
