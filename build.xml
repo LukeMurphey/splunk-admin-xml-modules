@@ -21,7 +21,7 @@ If you want to store the prefix so that you don't have to re-type it, then do th
 2) Test your build by making the modules and making sure they get properly made:
 
     ant
-    
+
 -->
 
 <project default="package" name="admin_modules">
