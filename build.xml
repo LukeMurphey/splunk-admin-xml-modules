@@ -1,7 +1,35 @@
+<!--
+This Ant build script can build modular input admin modules specifically for your app.
+
+See the following page for some more documentation: https://github.com/LukeMurphey/splunk-admin-xml-modules/blob/master/README.md
+
+This is licensed under the Apache License Version 2.0
+See https://www.apache.org/licenses/LICENSE-2.0.html
+
+To use it, run:
+
+    ant
+
+This will walk your through some steps to figure out how to prefix the modules for your app. It should also produce a file in the tmp/packages directory.
+
+If you want to store the prefix so that you don't have to re-type it, then do this:
+
+1) Run the setup build target like this:
+
+    ant setup
+
+2) Test your build by making the modules and making sure they get properly made:
+
+    ant
+    
+-->
 
 <project default="package" name="admin_modules">
 	<import file="basebuild.xml"/>
 
+	<!-- ================================= 
+          target: initialize_libraries
+         ================================= -->
 	<target name="initialize_libraries">
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
 		     <classpath>
