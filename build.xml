@@ -24,6 +24,13 @@
 	</target>
 
     <!-- ================================= 
+          target: make_package_name
+         ================================= -->
+	<target name="make_package_name">
+		<property name="value.build.package.file" value="${value.build.packageoutput.directory}/${value.build.prefix}_${value.build.appname}.tar.gz" />
+	</target>
+
+    <!-- ================================= 
           target: get_prefix
          ================================= -->
     <target name="get_prefix" unless="value.build.prefix" depends="initialize">
