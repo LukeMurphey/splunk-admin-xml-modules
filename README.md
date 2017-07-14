@@ -52,6 +52,7 @@ Here are some tips if you are converting your app to use secure storage for pass
 
 1) You use the helper functions from the [modular_input helper library](https://gist.github.com/LukeMurphey/7479309) to retrieve the password
 2) Make sure to update your conf file specs to note that the password field should no longer be used within the conf file
+3) If you are saving a password globally via setup.xml, then will likely want to use a SimpleXML setup page to handle the password. See https://github.com/LukeMurphey/splunk-simplexml-setup-example for some guidance. You can use the [SetupView.js](https://gist.github.com/LukeMurphey/a4426a951479a19371aad3dd826ab002) class which includes some utility functions for accessing secure storage.
 
 
 
