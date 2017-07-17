@@ -30,11 +30,16 @@ Instead, the username will be hard-coded as "IN_CONF_FILE" (since the username i
 This module assumes that your input stores the username in a field called "username" and password in a field called "password".
 
 
-| Parameter           | Purpose                                                                                                                                                                                                                                                                                                                                             | Example      |
-| --------------------- | -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------- |
+| Parameter           | Purpose | Example      |
+| ------------------- | -----   |------------- |
 | prefix              | Defines the prefix that will appended to the input name. This ought to match the prefix that would be appended to your input in inputs.conf. This parameter is used to set the realm of the secure password entry so as to make it possible to find the password entry for the given input later. The realm is being used as the unique identifier. | web_input:// |
-| passwordExampleText | To define the help to the user under the password field (this is optional)                                                                                                                                                                                                                                                                          |              |
-| usernameExampleText | To define the help to the user under the username field (this is optional)                                                                                                                                                                                                                                                                          |              |
+| passwordExampleText | To define the help to the user under the password field (this is optional)|              |
+| usernameExampleText | To define the help to the user under the username field (this is optional)|              |
+| usernameField | The name of the field containing the username (defaults to "username")|              |
+| passwordField | The name of the field containing the passowrd (defaults to "password")|              |
+| usernameFieldName | The name to show for the username (defaults to "Username")|              |
+| passwordFieldName | The name to show for the password (defaults to "Password")|              |
+| includeUsername | Indicates whether the username should be included (defaults to "true") |       false       |
 
 Below is an example of this module being used (from the Website Input app):
 
